@@ -1,0 +1,89 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task Resource OpenApi",
+        "contact": {
+            "name": "森崎",
+            "url": "/",
+            "email": "hirose.morisaki@gmail.com"
+        },
+        "version": "3.0"
+    },
+    "servers": [
+        {
+            "url": "http://shopapi.test/api"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get list of tasks",
+                "description": "Returns list of tasks",
+                "operationId": "getTaskList",
+                "parameters": [
+                    {
+                        "name": "Accept",
+                        "in": "header",
+                        "description": "Accept header to specify api version",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The page num of the list",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The item num per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The result of tasks"
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://localhost/oauth/authorize",
+                        "tokenUrl": "http://localhost/oauth/token",
+                        "refreshUrl": "http://localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

@@ -1,0 +1,20 @@
+
+@baseurl = http://shopapi.test/api/
+@hostname = api.example.com
+@port = 8080
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+# @name test
+# GET {{baseurl}}test
+
+# @name users
+# GET {{baseurl}}users
+
+# @name login
+POST {{baseurl}}auth/login HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+{
+  "email": "antony@test.com",
+  "password": "1111qqqq"
+}
