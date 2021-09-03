@@ -1,4 +1,7 @@
-## Laravel + dingo/api + Swagger api開発
+## Laravel + MySQL + dingo/api + Swagger api開発
+
+## 環境
+Homestead / vagrant
 
 ### 起動画面
 http://shopapi.test/
