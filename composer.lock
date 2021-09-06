@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf5baebbd11db339d92f8fff818809f2",
+    "content-hash": "1811a1f96edd152a96e41a21c8c52a39",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1152,6 +1152,65 @@
                 "source": "https://github.com/guzzle/psr7/tree/1.8.2"
             },
             "time": "2021-04-26T09:17:50+00:00"
+        },
+        {
+            "name": "laravel-lang/lang",
+            "version": "10.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Lang/lang.git",
+                "reference": "55866218d0d4ebefc4e7d82ecf7e85f6cbf1014d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/55866218d0d4ebefc4e7d82ecf7e85f6cbf1014d",
+                "reference": "55866218d0d4ebefc4e7d82ecf7e85f6cbf1014d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "andrey-helldar/pretty-array": "^2.3",
+                "andrey-helldar/support": "^3.16.1",
+                "guzzlehttp/guzzle": "^7.3",
+                "laravel/breeze": "^1.2",
+                "laravel/fortify": "^1.7",
+                "laravel/jetstream": "^2.3",
+                "php": "^8.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/finder": "^5.2",
+                "symfony/var-dumper": "^5.2",
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "suggest": {
+                "andrey-helldar/laravel-lang-publisher": "Easy installation and update of translation files for your project",
+                "arcanedev/laravel-lang": "Translations manager and checker for Laravel 5",
+                "overtrue/laravel-lang": "Command to add languages in your project"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laravel-Lang Team",
+                    "homepage": "https://github.com/Laravel-Lang"
+                }
+            ],
+            "description": "Languages for Laravel",
+            "keywords": [
+                "lang",
+                "languages",
+                "laravel",
+                "lpm"
+            ],
+            "support": {
+                "issues": "https://github.com/Laravel-Lang/lang/issues",
+                "source": "https://github.com/Laravel-Lang/lang"
+            },
+            "time": "2021-09-05T08:48:03+00:00"
         },
         {
             "name": "laravel/framework",

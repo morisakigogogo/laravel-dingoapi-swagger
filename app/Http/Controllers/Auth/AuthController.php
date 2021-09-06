@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /**
      * Create a new AuthController instance.
@@ -34,9 +35,9 @@ class AuthController extends Controller
         // dd(bcrypt('1111qqqq'));
         $credentials = request(['email', 'password']);
         // dd($credentials);
-        if (!$token = auth('api')->attempt($credentials)) {
+        if (!$token = auth('api')->attempt($credentials)) { //進行認證
             // return response()->json(['error' => 'Unauthorized'], 401);
-            return $this->response->errorUnauthorized();
+            return $this->response->errorUnauthorized(); //認證不通過返回異常
         }
 
         return $this->respondWithToken($token);
