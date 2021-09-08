@@ -1,13 +1,13 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Task Resource OpenApi",
+        "title": "laravel + dingoApi デモ",
         "contact": {
-            "name": "森崎",
+            "name": "hirose.morisaki",
             "url": "/",
             "email": "hirose.morisaki@gmail.com"
         },
-        "version": "3.0"
+        "version": "1.0"
     },
     "servers": [
         {
@@ -15,58 +15,140 @@
         }
     ],
     "paths": {
-        "/": {
+        "/admin/users": {
             "get": {
                 "tags": [
-                    "Tasks"
+                    "Admin"
                 ],
-                "summary": "Get list of tasks",
-                "description": "Returns list of tasks",
-                "operationId": "getTaskList",
+                "summary": "会員リスト",
+                "description": "会員リスト",
+                "operationId": "users",
                 "parameters": [
                     {
-                        "name": "Accept",
-                        "in": "header",
-                        "description": "Accept header to specify api version",
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
                         "required": false,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "page",
+                        "name": "email",
                         "in": "query",
-                        "description": "The page num of the list",
+                        "description": "Email",
                         "required": false,
                         "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "The item num per page",
-                        "required": false,
-                        "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "The result of tasks"
+                        "description": "200 成功しました"
+                    },
+                    "400": {
+                        "description": "400 エラーです"
                     }
                 },
-                "security": [
-                    {
-                        "passport": []
+                "deprecated": false
+            }
+        },
+        "/admin/users/{id}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "会員詳細",
+                "description": "会員詳細",
+                "operationId": "users/1",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "エラーです。"
                     }
-                ]
+                },
+                "deprecated": false
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "ログイン",
+                "description": "会員ログイン",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "E-mail",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "パスワード",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ログインしました！"
+                    },
+                    "400": {
+                        "description": "ログインエラーです。"
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "ログアウト",
+                "description": "会員ログアウト",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "ログアウトしました！"
+                    },
+                    "400": {
+                        "description": "ログアウトエラーです。"
+                    }
+                },
+                "deprecated": false
             }
         }
     },
     "components": {
         "securitySchemes": {
+            "access_token": {
+                "type": "apiKey",
+                "description": "Use a global client_id / client_secret and your email / password combo to obtain a token",
+                "name": "access_token",
+                "in": "header",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "/oauth/authorize",
+                        "tokenUrl": "/oauth/token",
+                        "refreshUrl": "/oauth/token/refresh",
+                        "scopes": {}
+                    }
+                },
+                "scheme": "http"
+            },
             "passport": {
                 "type": "oauth2",
                 "description": "Laravel passport oauth2 security.",

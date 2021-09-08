@@ -20,7 +20,7 @@ class RegisterRequest extends BaseRequest
         ];
     }
 
-    // resources/lang/ja オーバライト検証メッセージ
+    // resources/lang/jaにデフォルトは検証メッセージを書き直し
     public function messages()
     {
         return [ // 検証カラム　＋　検証規則

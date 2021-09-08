@@ -30,14 +30,58 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+    /**
+     * @OA\POST(
+     *     path="/auth/login",
+     *     tags={"Auth"},
+     *     summary="ログイン",
+     *     description="会員ログイン",
+     *     operationId="login",
+     *     deprecated=false,
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="E-mail",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="パスワード",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="ログインしました！"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="ログインエラーです。"
+     *     )
+     * )
+     */
     public function login(Request $request)
     {
         // dd(bcrypt('1111qqqq'));
         $credentials = request(['email', 'password']);
+
+
         // dd($credentials);
         if (!$token = auth('api')->attempt($credentials)) { //進行認證
             // return response()->json(['error' => 'Unauthorized'], 401);
             return $this->response->errorUnauthorized(); //認證不通過返回異常
+        }
+        // ユーザー状態検査
+        $user = auth('api')->user();
+        if ($user->is_locked == 1) {
+            return $this->response->errorForbidden('ユーザはロックされています。');
         }
 
         return $this->respondWithToken($token);
@@ -57,6 +101,24 @@ class AuthController extends BaseController
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
+     */
+    /**
+     * @OA\POST(
+     *     path="/auth/logout",
+     *     tags={"Auth"},
+     *     summary="ログアウト",
+     *     description="会員ログアウト",
+     *     operationId="logout",
+     *     deprecated=false,
+     *     @OA\Response(
+     *         response=200,
+     *         description="ログアウトしました！"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="ログアウトエラーです。"
+     *     )
+     * )
      */
     public function logout()
     {

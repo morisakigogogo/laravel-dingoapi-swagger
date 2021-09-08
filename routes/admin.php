@@ -3,7 +3,18 @@ use \App\Http\Controllers\Admin\UserController as Admin;
 
 $api = app('Dingo\Api\Routing\Router');
 
-$api->version('v1', ['middleware' => 'api.throttle', 'limit' => 60, 'expires' => 1],function ($api) {
+//bindings 是在Kernel.php 裡面設置的$routeMiddleware 路由中間件
+$paramsMiddlewares = [
+    'middleware' => [
+            'api.throttle', 
+            'serializer:array', // liyu/dingo-serializer-switch 格式化返回的數據 減少transformer的包裹層級
+            'bindings' // 支持路由模型注入
+        ], 
+        'limit' => 60, 
+        'expires' => 1
+];
+
+$api->version('v1', $paramsMiddlewares, function ($api) {
     //需要登录验证的接口，用组划分
     $api->group(['prefix' => 'admin','middleware' => 'api.auth'],function ($api) {
         // $api->get('users',  [TestController::class, 'users']);

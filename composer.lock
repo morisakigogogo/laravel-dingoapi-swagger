@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1811a1f96edd152a96e41a21c8c52a39",
+    "content-hash": "c794b8a17702b99411b8d7ce4227eb32",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1836,6 +1836,54 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "liyu/dingo-serializer-switch",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liyu001989/dingo-serializer-switch.git",
+                "reference": "a150dc0deaaec41f694538e9b7a3ba538ea565ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liyu001989/dingo-serializer-switch/zipball/a150dc0deaaec41f694538e9b7a3ba538ea565ed",
+                "reference": "a150dc0deaaec41f694538e9b7a3ba538ea565ed",
+                "shasum": ""
+            },
+            "require": {
+                "dingo/api": "^2.0|^3.0",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Liyu\\Dingo\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Liyu\\Dingo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yu Li",
+                    "email": "liyu001989@gmail.com"
+                }
+            ],
+            "description": "A middleware to switch dingo serializer",
+            "support": {
+                "issues": "https://github.com/liyu001989/dingo-serializer-switch/issues",
+                "source": "https://github.com/liyu001989/dingo-serializer-switch/tree/master"
+            },
+            "time": "2020-06-24T04:09:03+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8305,5 +8353,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
