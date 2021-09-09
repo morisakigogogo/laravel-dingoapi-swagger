@@ -18,7 +18,8 @@ class UserController extends BaseController
      *     tags={"Admin"},
      *     summary="会員リスト",
      *     description="会員リスト",
-     *     operationId="users",
+     *     operationId="userslist",
+     *     security={ {"bearer_token": {} }},
      *     deprecated=false,
      *     @OA\Parameter(
      *          name="name",
@@ -36,7 +37,10 @@ class UserController extends BaseController
      * ),
      *     @OA\Response(
      *         response=200,
-     *         description="200 成功しました"
+     *         description="リクエスト成功しました",
+     *                      @OA\JsonContent(
+     *                          @OA\Property(property="id", type="integer")
+     *                      )
      *     ),
      *     @OA\Response(
      *         response=400,
@@ -96,22 +100,27 @@ class UserController extends BaseController
      *     description="会員詳細",
      *     operationId="users/1",
      *     deprecated=false,
+     *     security={ {"bearer_token": {} }},
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
-     *         description="E-mail",
+     *         description="ユーザID",
      *         required=true,
      *         @OA\Schema(
-     *             type="string"
+     *             type="number"
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description=""
+     *         description="success"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
      *     ),
      *     @OA\Response(
      *         response=400,
-     *         description="エラーです。"
+     *         description="Invalid request"
      *     )
      * )
      */

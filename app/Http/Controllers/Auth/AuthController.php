@@ -61,6 +61,26 @@ class AuthController extends BaseController
      *         response=200,
      *         description="ログインしました！"
      *     ),
+    * @OA\Response(
+    *     response=422,
+    *     description="Validation error",
+    *     @OA\JsonContent(
+    *        @OA\Property(property="message", type="string", example="The given data was invalid."),
+    *        @OA\Property(
+    *           property="errors",
+    *           type="object",
+    *           @OA\Property(
+    *              property="email",
+    *              type="array",
+    *              collectionFormat="multi",
+    *              @OA\Items(
+    *                 type="string",
+    *                 example={"The email field is required.","The email must be a valid email address."},
+    *              )
+    *           )
+    *        )
+    *     )
+    *  ),
      *     @OA\Response(
      *         response=400,
      *         description="ログインエラーです。"
@@ -102,24 +122,28 @@ class AuthController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    /**
-     * @OA\POST(
-     *     path="/auth/logout",
-     *     tags={"Auth"},
-     *     summary="ログアウト",
-     *     description="会員ログアウト",
-     *     operationId="logout",
-     *     deprecated=false,
-     *     @OA\Response(
-     *         response=200,
-     *         description="ログアウトしました！"
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="ログアウトエラーです。"
-     *     )
-     * )
-     */
+
+     /** 
+    * @OA\Post ( 
+    * path="/auth/logout", 
+    * summary="注销", 
+    * description="注销用户并使令牌无效", 
+    * operationId="authLogout", 
+    * tags={"Auth"}, 
+    * security={ {"bearer": {} }}, 
+    * @OA\Response ( 
+    * response=200, 
+    * description="Success" 
+    * ), 
+    * @OA\Response ( 
+    * response=401, 
+    * description ="用户未通过身份验证时返回", 
+    *     @OA\JsonContent ( 
+    *        @OA\Property (property="message", type="string", example="未授权"), 
+    * ) 
+    * ) 
+    * )
+    */
     public function logout()
     {
         auth('api')->logout();

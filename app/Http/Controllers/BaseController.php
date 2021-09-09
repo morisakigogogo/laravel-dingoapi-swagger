@@ -19,18 +19,11 @@ use Dingo\Api\Routing\Helpers; // 就可以使用 $this->respose 等等了
  * ),
  * @OA\SecurityScheme(
  *     type="apiKey",
- *     description="Use a global client_id / client_secret and your email / password combo to obtain a token",
- *     name="access_token",
+ *     description="Enter token in format (Bearer <token>)",
+ *     name="Authorization",
  *     in="header",
- *     scheme="http",
- *     securityScheme="access_token",
- *     @OA\Flow(
- *         flow="password",
- *         authorizationUrl="/oauth/authorize",
- *         tokenUrl="/oauth/token",
- *         refreshUrl="/oauth/token/refresh",
- *         scopes={}
- *     )
+ *     scheme="bearer_token",
+ *     securityScheme="Bearer"
  * )
  */
 class BaseController extends Controller

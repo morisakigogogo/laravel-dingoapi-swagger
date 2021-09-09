@@ -22,7 +22,7 @@
                 ],
                 "summary": "会員リスト",
                 "description": "会員リスト",
-                "operationId": "users",
+                "operationId": "userslist",
                 "parameters": [
                     {
                         "name": "name",
@@ -45,13 +45,30 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "200 成功しました"
+                        "description": "リクエスト成功しました",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
                         "description": "400 エラーです"
                     }
                 },
-                "deprecated": false
+                "deprecated": false,
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/admin/users/{id}": {
@@ -62,15 +79,34 @@
                 "summary": "会員詳細",
                 "description": "会員詳細",
                 "operationId": "users/1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ユーザID",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": ""
+                        "description": "success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     },
                     "400": {
-                        "description": "エラーです。"
+                        "description": "Invalid request"
                     }
                 },
-                "deprecated": false
+                "deprecated": false,
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
             }
         },
         "/auth/login": {
@@ -105,6 +141,38 @@
                     "200": {
                         "description": "ログインしました！"
                     },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": [
+                                                            "The email field is required.",
+                                                            "The email must be a valid email address."
+                                                        ]
+                                                    },
+                                                    "collectionFormat": "multi"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "ログインエラーです。"
                     }
@@ -117,37 +185,46 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "ログアウト",
-                "description": "会員ログアウト",
-                "operationId": "logout",
+                "summary": "注销",
+                "description": "注销用户并使令牌无效",
+                "operationId": "authLogout",
                 "responses": {
                     "200": {
-                        "description": "ログアウトしました！"
+                        "description": "Success"
                     },
-                    "400": {
-                        "description": "ログアウトエラーです。"
+                    "401": {
+                        "description": "用户未通过身份验证时返回",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "未授权"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
-                "deprecated": false
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
     "components": {
         "securitySchemes": {
-            "access_token": {
+            "Bearer": {
                 "type": "apiKey",
-                "description": "Use a global client_id / client_secret and your email / password combo to obtain a token",
-                "name": "access_token",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
                 "in": "header",
-                "flows": {
-                    "password": {
-                        "authorizationUrl": "/oauth/authorize",
-                        "tokenUrl": "/oauth/token",
-                        "refreshUrl": "/oauth/token/refresh",
-                        "scopes": {}
-                    }
-                },
-                "scheme": "http"
+                "scheme": "bearer_token"
             },
             "passport": {
                 "type": "oauth2",
@@ -162,6 +239,12 @@
                         "scopes": []
                     }
                 }
+            },
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     },
