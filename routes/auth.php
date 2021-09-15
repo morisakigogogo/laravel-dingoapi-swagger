@@ -19,5 +19,7 @@ $api->version('v1', ['middleware' => 'api.throttle', 'limit' => 60, 'expires' =>
         $api->post('login', [Auth::class, 'login']);
         //ログアウト
         $api->post('logout', [Auth::class, 'logout']);
+        //リフレシュー
+        $api->post('refresh', [Auth::class, 'refresh']);
     });
 });

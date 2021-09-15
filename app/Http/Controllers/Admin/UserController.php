@@ -13,39 +13,8 @@ class UserController extends BaseController
      * 会員リスト
      */
         /**
-     * @OA\GET(
-     *     path="/admin/users",
-     *     tags={"Admin"},
-     *     summary="会員リスト",
-     *     description="会員リスト",
-     *     operationId="userslist",
-     *     security={ {"bearer_token": {} }},
-     *     deprecated=false,
-     *     @OA\Parameter(
-     *          name="name",
-     *          in="query",
-     *          description="name",
-     *          required=false,
-     *          @OA\Schema(type="string")
-     * ),
-     *     @OA\Parameter(
-     *          name="email",
-     *          in="query",
-     *          description="Email",
-     *          required=false,
-     *          @OA\Schema(type="string")
-     * ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="リクエスト成功しました",
-     *                      @OA\JsonContent(
-     *                          @OA\Property(property="id", type="integer")
-     *                      )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="400 エラーです"
-     *     )
+     * (
+     * #ref: './users.yaml'
      * )
      */
     public function index(Request $request)
@@ -98,7 +67,7 @@ class UserController extends BaseController
      *     tags={"Admin"},
      *     summary="会員詳細",
      *     description="会員詳細",
-     *     operationId="users/1",
+     *     operationId="usersid",
      *     deprecated=false,
      *     security={ {"bearer_token": {} }},
      *     @OA\Parameter(
@@ -144,6 +113,30 @@ class UserController extends BaseController
     /**
      * 会員ロック/非ロック
      */
+    /**
+     * @OA\patch(
+     *     path="/admin/users/{userid}/lock",
+     *     tags={"Admin"},
+     *     summary="会員ロック/非ロック",
+     *     description="会員ロック/非ロック",
+     *     operationId="userlock",
+     *     deprecated=false,
+     *     security={ {"bearer_token": {} }},
+     *     @OA\Parameter(
+     *         name="userid",
+     *         in="path",
+     *         description="ユーザID",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="noContent!"
+     *     )
+     * )
+    */
     public function lock(User $user)
     {
         $user->is_locked = $user->is_locked == 0 ? 1 : 0;

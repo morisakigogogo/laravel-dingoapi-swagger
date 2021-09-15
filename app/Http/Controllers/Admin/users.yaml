@@ -1,0 +1,15 @@
+paths:
+  /admin/users
+tags:
+  Admin
+summary:
+  会員リスト
+operationId:
+  userslist
+responses:
+  '200':
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: './users.yaml'

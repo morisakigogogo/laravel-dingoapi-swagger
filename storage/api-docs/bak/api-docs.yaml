@@ -1,0 +1,198 @@
+openapi: 3.0.0
+info:
+  title: 'laravel + dingoApi デモ'
+  contact:
+    name: hirose.morisaki
+    url: /
+    email: hirose.morisaki@gmail.com
+  version: '1.0'
+servers:
+  -
+    url: 'http://shopapi.test/api'
+paths:
+  '/admin/users/{id}':
+    get:
+      tags:
+        - Admin
+      summary: 会員詳細aaaa
+      description: 会員詳細
+      operationId: usersid
+      parameters:
+        -
+          name: id
+          in: path
+          description: ユーザID
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: success
+        401:
+          description: Unauthorized
+        400:
+          description: 'Invalid request'
+      deprecated: false
+      security:
+        -
+          bearer_token: []
+  '/admin/users/{userid}/lock':
+    patch:
+      tags:
+        - Admin
+      summary: 会員ロック/非ロック
+      description: 会員ロック/非ロック
+      operationId: userlock
+      parameters:
+        -
+          name: userid
+          in: path
+          description: ユーザID
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: noContent!
+      deprecated: false
+      security:
+        -
+          bearer_token: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: ログイン
+      description: 会員ログイン
+      operationId: login
+      parameters:
+        -
+          name: email
+          in: query
+          description: E-mail
+          required: true
+          schema:
+            type: string
+        -
+          name: password
+          in: query
+          description: パスワード
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ログインしました！
+        422:
+          description: 'Validation error'
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                    example: 'The given data was invalid.'
+                  errors:
+                    properties:
+                      email:
+                        type: array
+                        items:
+                          type: string
+                          example:
+                            - 'The email field is required.'
+                            - 'The email must be a valid email address.'
+                        collectionFormat: multi
+                    type: object
+                type: object
+        400:
+          description: ログインエラーです。
+      deprecated: false
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: ログアウト
+      description: ユーザーをログアウトし、トークンを無効にします
+      operationId: authLogout
+      responses:
+        200:
+          description: Success
+        401:
+          description: ユーザーが認証されていない場合に返す
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: Array
+                    example: 無許可
+                type: object
+      security:
+        -
+          bearer_token: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: 会員登録
+      description: 会員登録
+      operationId: register
+      parameters:
+        -
+          name: name
+          in: query
+          description: ユーザ名
+          required: true
+          schema:
+            type: string
+        -
+          name: email
+          in: query
+          description: Eメール
+          required: true
+          schema:
+            type: string
+        -
+          name: password
+          in: query
+          description: パスワード
+          required: true
+          schema:
+            type: string
+        -
+          name: password_confirmation
+          in: query
+          description: パスワード確認
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Success! 登録しました！'
+      deprecated: false
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: 'Enter token in format (Bearer <token>)'
+      name: Authorization
+      in: header
+      scheme: bearer_token
+    passport:
+      type: oauth2
+      description: 'Laravel passport oauth2 security.'
+      in: header
+      scheme: https
+      flows:
+        password:
+          authorizationUrl: 'http://localhost/oauth/authorize'
+          tokenUrl: 'http://localhost/oauth/token'
+          refreshUrl: 'http://localhost/token/refresh'
+          scopes: []
+    bearer_token:
+      type: apiKey
+      description: 'Enter token in format (Bearer <token>)'
+      name: Authorization
+      in: header
+security:
+  - []

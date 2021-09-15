@@ -126,20 +126,20 @@ class AuthController extends BaseController
      /** 
     * @OA\Post ( 
     * path="/auth/logout", 
-    * summary="注销", 
-    * description="注销用户并使令牌无效", 
+    * summary="ログアウト", 
+    * description="ユーザーをログアウトし、トークンを無効にします", 
     * operationId="authLogout", 
     * tags={"Auth"}, 
-    * security={ {"bearer": {} }}, 
+    * security={ {"bearer_token": {} }}, 
     * @OA\Response ( 
     * response=200, 
     * description="Success" 
     * ), 
     * @OA\Response ( 
     * response=401, 
-    * description ="用户未通过身份验证时返回", 
+    * description ="ユーザーが認証されていない場合に返す", 
     *     @OA\JsonContent ( 
-    *        @OA\Property (property="message", type="string", example="未授权"), 
+    *        @OA\Property (property="message", type="Array", example="無許可"), 
     * ) 
     * ) 
     * )
