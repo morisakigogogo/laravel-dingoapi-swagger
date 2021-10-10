@@ -44,12 +44,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->middleware('auth')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/auth.php'));
-            // 後台路由
+            // Backend路由
             Route::prefix('admin')
                 ->middleware('admin')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/admin.php'));
-            // 前台台路由
+            // Frontend路由
             Route::prefix('api')
                 ->middleware('api')
                 ->namespace($this->namespace)

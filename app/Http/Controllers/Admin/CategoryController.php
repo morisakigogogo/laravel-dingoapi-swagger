@@ -69,7 +69,10 @@ class CategoryController extends BaseController
 
 
         Category::create($insertData);
-        
+
+        //クリアcache キャッシュ
+        forget_cache_category();
+
         return $this->response->created();
     }
 

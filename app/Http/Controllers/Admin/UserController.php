@@ -58,7 +58,7 @@ class UserController extends BaseController
      * /api/admin/users/{id}
      * $id 取得　{id} の値
      * 獲取的id 為什麼不能注入 User的實例呢
-     * 需要配置中間件 Kernel.php 的$routeMiddleware 裡面的 SubstituteBindings 
+     * 需要配置中間件 Kernel.php 的$routeMiddleware 裡面的 SubstituteBindings
      * 這樣 就可以自動獲取到 傳入的id對應的用戶的值了 // 支持路由模型注入
      */
     /**
