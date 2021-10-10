@@ -1,5 +1,6 @@
 <?php
-use \App\Http\Controllers\Admin\UserController as Admin;
+use \App\Http\Controllers\Admin\UserController as Users;
+use \App\Http\Controllers\Admin\CategoryController as Category;
 
 $api = app('Dingo\Api\Routing\Router');
 
@@ -22,10 +23,12 @@ $api->version('v1', $paramsMiddlewares, function ($api) {
          * 会員管理
          */
         // 会員ロック/非ロック
-        $api->patch('users/{user}/lock', [Admin::class, 'lock']);
+        $api->patch('users/{user}/lock', [Users::class, 'lock']);
 
         // 会員管理リソースルーティング
         // $api->resource dingoAPI 書き方　
-        $api->resource('users', Admin::class, ['only' => ['index', 'show']]);
+        $api->resource('users', Users::class, ['only' => ['index', 'show']]);
+        // カテゴリ管理ルーティング　
+        $api->resource('category', Category::class,['except' => ['destroy']]);
     });
 });

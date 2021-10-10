@@ -103,54 +103,6 @@ paths:
       security:
         -
           bearer_token: []
-  '/admin/category':
-    post:
-      tags:
-        - Admin
-      summary: カテゴリ追加
-      description: カテゴリ追加
-      operationId: categoryadd
-      parameters:
-        -
-          name: name
-          in: query
-          description: カテゴリ名称
-          required: true
-          schema:
-            type: string
-        -
-          name: pid
-          in: query
-          description: 主なID
-          required: true
-          schema:
-            type: integer
-      responses:
-        200:
-          description: 追加しました！
-      deprecated: false
-      security:
-        -
-          bearer_token: []
-  '/admin/category/list':
-    get:
-      tags:
-        - Admin
-      summary: カテゴリリスト
-      description: カテゴリリスト
-      operationId: categorylist
-      responses:
-        200:
-          description: 成功しました
-          content:
-            application/json:
-              schema:
-                oneOf:
-                 - $ref: '#components/schemas/CategoryOfOne'
-      deprecated: false
-      security:
-        -
-          bearer_token: []
   /auth/login:
     post:
       tags:
@@ -356,38 +308,6 @@ components:
             type: string
             description: 更新日付.
             example: "2021-05-20T16:01:38.000000Z"
-    CategoryOfOne:
-          type: object
-          properties:
-            id:
-              type: integer
-              description: ユニークID
-              example: 1
-            name:
-              type: string
-              description: カテゴリ名
-              example: スマートフォン
-            pid:
-              type: integer
-              description: カテゴリID
-              example: 0
-            status:
-              type: integer
-              description: ステータス
-              example: 1
-            level:
-              type: integer
-              description: ラベル
-              example: 1
-            created_at:
-              type: string
-              description: 作成日付.
-              example: "2021-09-27T15:43:16.000000Z"
-            updated_at:
-              type: string
-              description: 更新日付.
-              example: "2021-09-27T15:43:16.000000Z"
-            
     # Schema for error response body
     Error:
       type: object
