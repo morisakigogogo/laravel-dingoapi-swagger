@@ -23,6 +23,8 @@ class UserController extends BaseController
         $name = $request->input('name'); // queryはGETしか取得できない。　input は　GET or POST 両方でも取得できる
         $email = $request->input('email');
 
+        echo "shopapi";
+        
         $users = User::when($name, function ($query) use ($name) {
             $query->where('name', 'like', "%$name%"); // "" 可以直接寫變量
         })
@@ -30,7 +32,7 @@ class UserController extends BaseController
             $query->where('email', $email);
         })
         ->paginate(3);
-
+        // var_dump($users);
         // $users = User::all();
         // return $users; UserTransformer フィルタカラム　過濾想要返回的字段
         // return $this->response->collection($users, new UserTransformer());

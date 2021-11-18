@@ -132,13 +132,21 @@ paths:
       security:
         -
           bearer_token: []
-  '/admin/category/list':
+  '/admin/category/{categoryid}':
     get:
       tags:
         - Admin
-      summary: カテゴリリスト
-      description: カテゴリリスト
-      operationId: categorylist
+      summary: カテゴリ詳細
+      description: カテゴリ詳細
+      operationId: categorydetail
+      parameters:
+        -
+          name: categoryid
+          in: path
+          description: カテゴリID
+          required: true
+          schema:
+            type: integer
       responses:
         200:
           description: 成功しました
@@ -147,6 +155,55 @@ paths:
               schema:
                 oneOf:
                  - $ref: '#components/schemas/CategoryOfOne'
+      deprecated: false
+      security:
+        -
+          bearer_token: []
+  '/admin/categorys':
+    get:
+      tags:
+        - Admin
+      summary: カテゴリリスト
+      description: カテゴリリスト
+      operationId: categorylist
+      parameters:
+        -
+          name: type
+          in: query
+          description: 更新タイプ
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: 成功しました
+          content:
+            application/json:
+              schema:
+                oneOf:
+                 - $ref: '#components/schemas/CategoryOfOne'
+      deprecated: false
+      security:
+        -
+          bearer_token: []
+  '/admin/goods':
+    post:
+      tags:
+        - Admin
+      summary: 商品追加
+      description: 商品追加
+      operationId: goodsadd
+      parameters:
+        -
+          name: good_id
+          in: query
+          description: 商品ID
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 追加しました！
       deprecated: false
       security:
         -

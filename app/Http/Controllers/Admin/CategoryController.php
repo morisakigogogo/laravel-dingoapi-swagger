@@ -14,7 +14,7 @@ class CategoryController extends BaseController
      * @return \Illuminate\Http\Response
      */
     //カテゴリリスト
-    public function index()
+    public function index(Request $request)
     {
         //　取得全て
         // $categories = Category::all();
@@ -24,7 +24,12 @@ class CategoryController extends BaseController
         //helpersに定義している
         // return categoryTree();
         // return cache_category();
-        return cache_category_all();
+        $type = $request->input('type');
+        if ($type == 'all') {
+            return cache_category_all();
+        } else {
+            return cache_category();
+        }
     }
 
     /**
@@ -36,12 +41,51 @@ class CategoryController extends BaseController
      */
     public function store(Request $request)
     {
-        //パラメータ検証
+        $insertData = $this->checkInput($request);
+        if(!is_array($insertData)) return $insertData;
+
+        Category::create($insertData);
+
+        return $this->response->created();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     * カテゴリ詳細
+     * http://shopapi.test/api/admin/category/{categoryid}
+     */
+    public function show(Category $category)
+    {
+        return $category;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $requestx
+     * @param  int  $id
+     * カテゴリ更新
+     */
+    public function update(Request $request, Category $category)
+    {
+        $updateData = $this->checkInput($request);
+        if(!is_array($updateData)) return $updateData;
+
+        $category->update($updateData);
+
+        return $this->response->noContent();
+    }
+    protected function checkInput($request)
+    {
+        // パラメータ検証
         $request->validate([
             'name' => 'required|max:16'
         ], [
             'name.required' => 'カテゴリは空にすることができません。'
-        ]);
+        ]); //这里会返回响应的实例
 
         // ID取得
         $pid = $request->input('pid');
@@ -53,60 +97,26 @@ class CategoryController extends BaseController
         // カテゴリ３段に超えることができません。
         if($level > 3) {
             return $this->response->errorBadRequest('カテゴリ３段に超えることができません。');
-        };
-        $insertData = [
+        }
+        return [
             'name' => $request->input('name'),
             'pid' => $pid,
             'level' => $level
-            // 'level' => $pid == 0 ? 1 : (Category::find($pid)->level + 1)
         ];
 
-        // $insertData = [
-        //     'name' => $request->input('name'),
-        //     'pid' => $pid,
-        //     'level' => $level
-        // ];
-
-
-        Category::create($insertData);
-
-        //クリアcache キャッシュ
-        forget_cache_category();
-
-        return $this->response->created();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * 状態OFF・ON
+     * shopapi.test/api/admin/category/5/status
      */
-    public function destroy($id)
+    public function status(Category $category) //依赖注入
     {
-        //
+        $category->status = $category->status == 1 ? 0 : 1;
+        $category->save();
+
+        return $this->response->noContent();
     }
 }

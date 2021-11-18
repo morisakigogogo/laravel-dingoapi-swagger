@@ -7,7 +7,6 @@ use App\Models\Category;
 if (!function_exists('categoryTree')) {
   function categoryTree($status = false)
   {
-    dd('categoryTree');
     $categories = Category::select(['id', 'pid', 'name', 'level', 'status'])//开始查找时分类 1级分类
     ->when($status !== false, function($query) use ($status) {
       $query->where('status', $status);
